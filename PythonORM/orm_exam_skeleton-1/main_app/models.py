@@ -1,6 +1,8 @@
 from django.core.validators import MinLengthValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 
+from main_app.managers import DirectorManager
+
 
 class Director(models.Model):
     full_name = models.CharField(
@@ -18,6 +20,7 @@ class Director(models.Model):
         default=0,
         validators=[MinValueValidator(0)]
     )
+    objects = DirectorManager()
 
     def __str__(self):
         return self.full_name
@@ -84,7 +87,8 @@ class Movie(models.Model):
     )
     director = models.ForeignKey(
         Director,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='movies'
     )
     starring_actor = models.ForeignKey(
         Actor,
