@@ -1,6 +1,9 @@
 from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
 
+from main_app.managers import ProfileManager
+
+
 class DateTime(models.Model):
     class Meta:
         abstract = True
@@ -26,6 +29,7 @@ class Profile(DateTime):
     is_active = models.BooleanField(
         default=True
     )
+    objects = ProfileManager()
 
 class Product(DateTime):
     name = models.CharField(
